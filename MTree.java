@@ -1,12 +1,15 @@
 package MerkleTree;
+import java.math.BigInteger; 
+import java.security.MessageDigest; 
+import java.security.NoSuchAlgorithmException; 
 
 public class MTree {
 	
 	private int size = 0;
-	private String hash;
+	private String hash = "";
 	
-	public MTree leftTree = null;
-	public MTree rightTree = null;
+	private MTree leftTree = null;
+	private MTree rightTree = null;
 	
 	// Child leaves
 	//private Leaf leftLeaf = null;
@@ -26,6 +29,8 @@ public class MTree {
 		if(rightTree != null) {s = s + rightTree.getSize();}
 		return s;
 	}
+	
+	public String getHash() {return hash;}
 	
 	public int numnodes() {
 		int s = 0;
@@ -61,9 +66,10 @@ public class MTree {
 		}
 		else {
 			//add leaf to ?
-			System.out.println("rippadd");
+			//System.out.println("rippadd");
 			rightTree.rippleAddLeaf(inp);
 		}
+		this.updateHash();
 	}
 	
 	
@@ -82,7 +88,7 @@ public class MTree {
 			}
 		}
 		else {
-			System.out.println("r1");
+			//System.out.println("r1");
 			if(rightTree == null) {
 				MTree r = new Leaf(inp);
 				rightTree = r;
@@ -93,7 +99,7 @@ public class MTree {
 	}
 	
 	
-	public void addnodes(int depth) {
+	private void addnodes(int depth) {
 		if(depth <= 0) {return; }
 		MTree l = new MTree();
 		MTree r = new MTree();
@@ -104,8 +110,14 @@ public class MTree {
 		this.rightTree.addnodes(depth - 1);
 	}
 	
-	public void updateHash() {
-		
+	public String updateHash() {
+		//hash = hash(hash of right node + hash of left node)
+		String h = "";
+		if(leftTree != null) {h = h + leftTree.updateHash();}
+		if(rightTree != null) {h = h + rightTree.updateHash();}
+		String newhash = getMd5(h);
+		this.hash = newhash;
+		return newhash;
 	}
 	
 	
@@ -143,6 +155,32 @@ public class MTree {
 		 if(rightTree != null) {rightTree.printTree(d+1);}
 	 }
 	
-	
+	 public static String getMd5(String input) { 
+	        try { 
+	  
+	            // Static getInstance method is called with hashing MD5 
+	            MessageDigest md = MessageDigest.getInstance("MD5"); 
+	  
+	            // digest() method is called to calculate message digest 
+	            //  of an input digest() return array of byte 
+	            byte[] messageDigest = md.digest(input.getBytes()); 
+	  
+	            // Convert byte array into signum representation 
+	            BigInteger no = new BigInteger(1, messageDigest); 
+	  
+	            // Convert message digest into hex value 
+	            String hashtext = no.toString(16); 
+	            while (hashtext.length() < 32) { 
+	                hashtext = "0" + hashtext; 
+	            } 
+	            return hashtext; 
+	        }  
+	  
+	        // For specifying wrong message digest algorithms 
+	        catch (NoSuchAlgorithmException e) { 
+	            throw new RuntimeException(e); 
+	        }
+	 }
+	 
 	
 }

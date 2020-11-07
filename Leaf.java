@@ -14,6 +14,7 @@ public class Leaf extends MTree{
 	public boolean ismaxed() {return true;}
 	
 	public String getHash() {return content;}
+	public String updateHash() {return content;}
 	
 	public void printTree(int d) {
 		System.out.print(d);
