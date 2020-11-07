@@ -17,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 
 public class MTree {
 	
-	private int size = 0;
 	private String hash = "";
 	
 	private MTree leftTree = null;
@@ -56,11 +55,9 @@ public class MTree {
 	//adds the new leaf with a transaction to the tree
 	public void addLeaf(Transaction t) {
 		if(this.getSize() == 0) {
-			MTree leaf = new Leaf(t);
 			leftTree = new Leaf(t);
 		}
 		else if(this.getSize() == 1) {
-			MTree leaf = new Leaf(t);
 			rightTree = new Leaf(t);
 		}
 		else if(ispowoftwo(this.getSize())) {
