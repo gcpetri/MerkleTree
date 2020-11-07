@@ -1,6 +1,6 @@
-package MerkelTree;
+package MerkleTree;
 
-public class Leaf {
+public class Leaf extends MTree{
 
 	private String content;
 	
@@ -8,7 +8,15 @@ public class Leaf {
 		this.content = inp;
 	}
 	
+	public int getSize() {return 1;}
+	public int numnodes() {return 1;}
+	
+	public boolean ismaxed() {return true;}
 	
 	public String getHash() {return content;}
 	
+	public void printTree(int d) {
+		System.out.print(d);
+		System.out.print("L ");
+	 }
 }
