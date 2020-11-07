@@ -14,6 +14,8 @@
  * hash calculations are updated going up the tree. 
  * Finally, the new hash of the root is updated uniquely, 
  * reflecting the transaction has been processed.
+ * 
+ * we referenced https://www.geeksforgeeks.org/md5-hash-in-java/ for use of MD5 hashing in Java.
 ************************************************/
 package MerkleTree;
 
