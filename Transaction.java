@@ -30,6 +30,8 @@ public class Transaction {
 		this.amount = amount;
 	}
 	
+	//NO SETTRANSACTION, because it should not be changed
+	
 	protected String getTransaction() {
 		String t = fromWallet + " -> $" + amount + " -> " + toWallet;
 		return t;

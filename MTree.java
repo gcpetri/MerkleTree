@@ -34,7 +34,7 @@ public class MTree {
 		
 	}
 	
-	
+	//returns amount of leaf nodes in the tree
 	public int getSize() {
 		int s = 0;
 		if(leftTree != null) {s = s + leftTree.getSize();}
@@ -42,8 +42,10 @@ public class MTree {
 		return s;
 	}
 	
+	//returns this nodes hash
 	public String getHash() {return hash;}
 	
+	//returns the number of nodes under a node, not including itself
 	public int numnodes() {
 		int s = 0;
 		if(leftTree != null) {s = s + 1 + leftTree.numnodes();}
@@ -51,6 +53,7 @@ public class MTree {
 		return s;
 	}
 	
+	//adds the new leaf with a transaction to the tree
 	public void addLeaf(Transaction t) {
 		if(this.getSize() == 0) {
 			MTree leaf = new Leaf(t);
@@ -62,7 +65,6 @@ public class MTree {
 		}
 		else if(ispowoftwo(this.getSize())) {
 			//add this trees children to a new left tree
-
 			MTree m = new MTree();
 			m.leftTree = this.leftTree;
 			m.rightTree = this.rightTree;
@@ -71,43 +73,46 @@ public class MTree {
 			//add log2(size) depth tree to the right side
 			MTree r = new MTree();
 			this.rightTree = r;
-
 			this.rightTree.addnodes(log2(this.getSize())-1);
+			//add the node to the the new side of the tree
 			rightTree.rippleAddLeaf(t);
-			
 		}
 		else {
 			//add leaf to ?
 			//System.out.println("rippadd");
 			rightTree.rippleAddLeaf(t);
 		}
+		//updates trees hash after adding the new node
 		this.updateHash();
 	}
 	
 	
 	private void rippleAddLeaf(Transaction t) {
-
+		
+		//decides whether to traverse left or right tree
 		if(leftTree == null || !leftTree.ismaxed()) {
+			//if no children, end of the tree is reached, add node
 			if(leftTree == null) {
-
 				MTree l = new Leaf(t);
 				leftTree = l;
 			}
+			//if children, repeat to find end of tree
 			else { leftTree.rippleAddLeaf(t); }
 		}
 		
 		else {
-			
+			//if no children, end of the tree is reached, add node
 			if(rightTree == null) {
 				MTree r = new Leaf(t);
 				rightTree = r;
 			}
+			//if children, repeat to find end of tree
 			rightTree.rippleAddLeaf(t);
 		}
 		
 	}
 	
-	
+	//recursively add nodes to create tree
 	private void addnodes(int depth) {
 		if(depth <= 0) {return; }
 		MTree l = new MTree();
@@ -118,6 +123,7 @@ public class MTree {
 		this.rightTree.addnodes(depth - 1);
 	}
 	
+	//recursively iterates through tree and calculates its hash values
 	public String updateHash() {
 		//hash = hash(hash of right node + hash of left node)
 		String h = "";
@@ -128,7 +134,7 @@ public class MTree {
 		return newhash;
 	}
 
-	
+	//checks if all nodes below have the maximum amount of leaves
 	public boolean ismaxed() {
 		if(leftTree != null) {if(!leftTree.ismaxed()) {return false;}}
 		else {return false;}
@@ -137,7 +143,7 @@ public class MTree {
 		return true;
 	}
 	
-	
+	//prints tree in preorder traversal, leaves are indicated with an L
 	public void printTree(int d) {
 		 System.out.print(d);
 		 System.out.print(" ");
@@ -145,32 +151,35 @@ public class MTree {
 		 if(rightTree != null) {rightTree.printTree(d+1);}
 	 }
 	 
+	//prints all contents of leaf nodes
 	 public void printLog() {
 		 if(leftTree != null) {leftTree.printLog();}
 		 if(rightTree != null) {rightTree.printLog();}
 	 }
 	
+	//returns true if x is a power of 2
 	public static boolean ispowoftwo(int x){
 		if(x % 2 == 0) {return ispowoftwo(x / 2);}
 		if(x == 1) {return true;}
 		return false;
 	}
 	
+	//returns log2 of x
 	public static int log2(int x) {return (int) (Math.log(x) / Math.log(2));}
 	
-	
-	 public static String calcHash(String input) { 
+	//returns MD5 hash of input
+	public static String calcHash(String input) { 
 	        try { 
 	            MessageDigest md = MessageDigest.getInstance("MD5"); 
 	            byte[] messageDigest = md.digest(input.getBytes()); 
 	  
-	            BigInteger no = new BigInteger(1, messageDigest); 
+	            BigInteger bi = new BigInteger(1, messageDigest); 
 	  
-	            String hashtext = no.toString(16); 
-	            while (hashtext.length() < 32) { 
-	                hashtext = "0" + hashtext; 
+	            String hash = bi.toString(16); 
+	            while (hash.length() < 32) { 
+	                hash = "0" + hash; 
 	            } 
-	            return hashtext; 
+	            return hash; 
 	        }  
 
 	        catch (NoSuchAlgorithmException e) { 

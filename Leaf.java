@@ -13,11 +13,10 @@
 package MerkleTree;
 
 public class Leaf extends MTree{
-	// CHANGED (String -> Transaction)
+	
 	private Transaction content;
 	
 	Leaf(Transaction t) {
-		// CHANGED (Transaction(inp))
 		
 		this.content = t;
 	}
