@@ -16,9 +16,10 @@ public class Leaf extends MTree{
 	// CHANGED (String -> Transaction)
 	private Transaction content;
 	
-	Leaf(String inp) {
+	Leaf(Transaction t) {
 		// CHANGED (Transaction(inp))
-		this.content = Transaction(inp);
+		
+		this.content = t;
 	}
 	
 	public int getSize() {return 1;}
@@ -29,6 +30,7 @@ public class Leaf extends MTree{
 	// CHANGED (ToString())
 	public String getHash() {return content.ToString();}
 	public String updateHash() {return content.ToString();}
+	public void printLog() {System.out.println(this.content.ToString());}
 	
 	public void printTree(int d) {
 		System.out.print(d);

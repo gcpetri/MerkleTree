@@ -17,19 +17,27 @@ package MerkleTree;
 // CHANGED
 public class Transaction {
 
-	private String seed;
+	private String fromWallet;
+	private String toWallet;
+	private double amount;
+	private int number; 
 	
-	Transaction(String seed) {
-		this.seed = seed;
+	
+	
+	Transaction(String fromWallet, String toWallet, double amount) {
+		this.fromWallet = fromWallet;
+		this.toWallet = toWallet;
+		this.amount = amount;
 	}
+	
 	protected String getTransaction() {
-		return seed;
+		String t = fromWallet + " -> $" + amount + " -> " + toWallet;
+		return t;
 	}
 
-	protected void setTransaction(String newSeed) {
-		seed = newSeed;
-	}
+	
 	public String ToString() {
-		return this.seed;
+		String t = fromWallet + " -> $" + amount + " -> " + toWallet;
+		return t;
 	}
 }

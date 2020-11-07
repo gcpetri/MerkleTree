@@ -32,7 +32,8 @@ public class Driver {
 			System.out.print(i);
 			System.out.println(": ");
 			
-			tree.addLeaf("L");
+			Transaction t = new Transaction("from","to",(double)i);
+			tree.addLeaf(t);
 			
 			System.out.println("size: " + tree.getSize());
 			System.out.println("maxed? " + tree.ismaxed());
@@ -43,8 +44,10 @@ public class Driver {
 		System.out.println();
 		
 		System.out.println(tree.getHash());
-		tree.addLeaf("L");
+		Transaction t = new Transaction("from","to",10.0);
+		tree.addLeaf(t);
 		System.out.println(tree.getHash());
+		tree.printLog();
 		
 	}
 

@@ -51,61 +51,58 @@ public class MTree {
 		return s;
 	}
 	
-	public void addLeaf(String inp) {
+	public void addLeaf(Transaction t) {
 		if(this.getSize() == 0) {
-			MTree leaf = new Leaf(inp);
-			leftTree = new Leaf(inp);
+			MTree leaf = new Leaf(t);
+			leftTree = new Leaf(t);
 		}
 		else if(this.getSize() == 1) {
-			MTree leaf = new Leaf(inp);
-			rightTree = new Leaf(inp);
+			MTree leaf = new Leaf(t);
+			rightTree = new Leaf(t);
 		}
 		else if(ispowoftwo(this.getSize())) {
 			//add this trees children to a new left tree
-			//System.out.println("t");
+
 			MTree m = new MTree();
 			m.leftTree = this.leftTree;
 			m.rightTree = this.rightTree;
 			this.leftTree = m;
-			//System.out.println(this.leftTree.getSize());
+			
 			//add log2(size) depth tree to the right side
 			MTree r = new MTree();
 			this.rightTree = r;
-			//System.out.println(log2(this.getSize())-1);
+
 			this.rightTree.addnodes(log2(this.getSize())-1);
-			rightTree.rippleAddLeaf(inp);
+			rightTree.rippleAddLeaf(t);
 			
 		}
 		else {
 			//add leaf to ?
 			//System.out.println("rippadd");
-			rightTree.rippleAddLeaf(inp);
+			rightTree.rippleAddLeaf(t);
 		}
 		this.updateHash();
 	}
 	
 	
-	private void rippleAddLeaf(String inp) {
-		//System.out.println("t1");
+	private void rippleAddLeaf(Transaction t) {
+
 		if(leftTree == null || !leftTree.ismaxed()) {
-			//System.out.println("m");
 			if(leftTree == null) {
-				//System.out.println("t2");
-				MTree l = new Leaf(inp);
+
+				MTree l = new Leaf(t);
 				leftTree = l;
 			}
-			else {
-				//System.out.println("t3");
-				leftTree.rippleAddLeaf(inp);
-			}
+			else { leftTree.rippleAddLeaf(t); }
 		}
+		
 		else {
-			//System.out.println("r1");
+			
 			if(rightTree == null) {
-				MTree r = new Leaf(inp);
+				MTree r = new Leaf(t);
 				rightTree = r;
 			}
-			rightTree.rippleAddLeaf(inp);
+			rightTree.rippleAddLeaf(t);
 		}
 		
 	}
@@ -117,7 +114,6 @@ public class MTree {
 		MTree r = new MTree();
 		this.leftTree = l;
 		this.rightTree = r;
-		//System.out.println("d:" + depth);
 		this.leftTree.addnodes(depth - 1);
 		this.rightTree.addnodes(depth - 1);
 	}
@@ -127,15 +123,11 @@ public class MTree {
 		String h = "";
 		if(leftTree != null) {h = h + leftTree.updateHash();}
 		if(rightTree != null) {h = h + rightTree.updateHash();}
-		String newhash = getMd5(h);
+		String newhash = calcHash(h);
 		this.hash = newhash;
 		return newhash;
 	}
-	
-	
-	public void crypto(String inp) {
-		
-	}
+
 	
 	public boolean ismaxed() {
 		if(leftTree != null) {if(!leftTree.ismaxed()) {return false;}}
@@ -145,50 +137,42 @@ public class MTree {
 		return true;
 	}
 	
-	public static boolean ispowoftwo(int x){
-		if(x % 2 == 0) {
-			return ispowoftwo(x / 2);
-		}
-		if(x == 1) {
-			return true;
-		}
-		return false;
-	}
 	
-	public static int log2(int x) {
-	    return (int) (Math.log(x) / Math.log(2));
-	}
-	
-	
-	 public void printTree(int d) {
+	public void printTree(int d) {
 		 System.out.print(d);
 		 System.out.print(" ");
 		 if(leftTree != null) {leftTree.printTree(d+1);}
 		 if(rightTree != null) {rightTree.printTree(d+1);}
 	 }
+	 
+	 public void printLog() {
+		 if(leftTree != null) {leftTree.printLog();}
+		 if(rightTree != null) {rightTree.printLog();}
+	 }
 	
-	 public static String getMd5(String input) { 
+	public static boolean ispowoftwo(int x){
+		if(x % 2 == 0) {return ispowoftwo(x / 2);}
+		if(x == 1) {return true;}
+		return false;
+	}
+	
+	public static int log2(int x) {return (int) (Math.log(x) / Math.log(2));}
+	
+	
+	 public static String calcHash(String input) { 
 	        try { 
-	  
-	            // Static getInstance method is called with hashing MD5 
 	            MessageDigest md = MessageDigest.getInstance("MD5"); 
-	  
-	            // digest() method is called to calculate message digest 
-	            //  of an input digest() return array of byte 
 	            byte[] messageDigest = md.digest(input.getBytes()); 
 	  
-	            // Convert byte array into signum representation 
 	            BigInteger no = new BigInteger(1, messageDigest); 
 	  
-	            // Convert message digest into hex value 
 	            String hashtext = no.toString(16); 
 	            while (hashtext.length() < 32) { 
 	                hashtext = "0" + hashtext; 
 	            } 
 	            return hashtext; 
 	        }  
-	  
-	        // For specifying wrong message digest algorithms 
+
 	        catch (NoSuchAlgorithmException e) { 
 	            throw new RuntimeException(e); 
 	        }
