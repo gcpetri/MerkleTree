@@ -26,7 +26,6 @@ public class Leaf extends MTree{
 	
 	public boolean ismaxed() {return true;}
 	
-	// CHANGED (ToString())
 	public String getHash() {return content.ToString();}
 	public String updateHash() {return content.ToString();}
 	public void printLog() {System.out.println(this.content.ToString());}

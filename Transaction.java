@@ -14,7 +14,6 @@ package MerkleTree;
 
 
 
-// CHANGED
 public class Transaction {
 
 	private String fromWallet;
