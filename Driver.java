@@ -22,17 +22,28 @@ public class Driver {
 
 	public static void main(String[] args) {
 		
+		String[] names = {"Jeff", "Bob", "Tim", "Greg", "Nick", "Shawn"};
+		
 		
 		MTree tree = new MTree();
 		
-		System.out.println(tree.getSize());
-
+		System.out.println("size: " + tree.getSize());
+		System.out.println();
 		
-		for(int i = 1; i <= 32; i++) {
-			System.out.print(i);
-			System.out.println(": ");
+		
+		for(int i = 1; i <= 16; i++) {
+			System.out.println("Adding leaf " + i + ":");
 			
-			Transaction t = new Transaction("from","to",(double)i);
+			String from = names[(int)(Math.random()*(6))];
+			
+			String to = names[(int)(Math.random()*(6))];
+			while(from.equals(to)) {
+				to = names[(int)(Math.random()*(6))];
+			}
+
+			double amount = Math.round(Math.random() * 10000)/(double)100;
+			
+			Transaction t = new Transaction(from,to,amount);
 			tree.addLeaf(t);
 			
 			System.out.println("size: " + tree.getSize());
@@ -40,16 +51,26 @@ public class Driver {
 			System.out.println();
 		}
 		
+		System.out.print("Tree with "+ tree.getSize() + " leaves:  ");
 		tree.printTree(0);
 		System.out.println();
 		
-		System.out.println(tree.getHash());
+		System.out.println("hash: " + tree.getHash());
+		System.out.println();
+		
 		Transaction t = new Transaction("from","to",10.0);
 		tree.addLeaf(t);
-		System.out.println(tree.getHash());
+		
+		System.out.print("Tree with "+ tree.getSize() + " leaves:  ");
+		tree.printTree(0);
+		System.out.println();
+		System.out.println("hash: " + tree.getHash());
+		System.out.println();
+		
+		System.out.println("Log of all transactions: ");
 		tree.printLog();
 		
 	}
-
-
+	
+	
 }
