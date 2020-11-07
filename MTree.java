@@ -1,7 +1,19 @@
+/***********************************************
+** File:    MTree.java
+** Project: CSCE 314 Project, Fall 2020
+** Author:  Nicholas Saldana & Gregory Petri
+** Date:    11/07/2020
+** Section: 501
+** E-mail:  nsaldana@tamu.edu & gcpetri@tamu.edu
+**
+**   This file contains the MTree class for the
+** Merkle Tree.
+************************************************/
 package MerkleTree;
 import java.math.BigInteger; 
 import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException; 
+
 
 public class MTree {
 	

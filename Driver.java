@@ -1,17 +1,21 @@
-package MerkleTree;
-
-/* Header:
- * 
- * Cryptocurrency Transaction Merkle Tree
- * 
- * This is an implementation of a merkle tree to track
+/***********************************************
+** File:    Driver.java
+** Project: CSCE 314 Project, Fall 2020
+** Author:  Nicholas Saldana & Gregory Petri
+** Date:    11/07/2020
+** Section: 501
+** E-mail:  nsaldana@tamu.edu & gcpetri@tamu.edu
+**
+**   This file contains the main driver program for Project 1.
+** This is an implementation of a merkle tree to track
  * secure cryptocurrency transactions. Leafs are added 
  * to the tree when a transaction is proccessed. The 
  * hash of the new transaction is calculated and the 
  * hash calculations are updated going up the tree. 
  * Finally, the new hash of the root is updated uniquely, 
  * reflecting the transaction has been processed.
- */
+************************************************/
+package MerkleTree;
 
 
 public class Driver {
