@@ -1,6 +1,17 @@
 package MerkleTree;
 
-
+/* Header:
+ * 
+ * Cryptocurrency Transaction Merkle Tree
+ * 
+ * This is an implementation of a merkle tree to track
+ * secure cryptocurrency transactions. Leafs are added 
+ * to the tree when a transaction is proccessed. The 
+ * hash of the new transaction is calculated and the 
+ * hash calculations are updated going up the tree. 
+ * Finally, the new hash of the root is updated uniquely, 
+ * reflecting the transaction has been processed.
+ */
 
 
 public class Driver {
