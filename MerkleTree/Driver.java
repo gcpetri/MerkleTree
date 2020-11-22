@@ -32,6 +32,13 @@ public class Driver {
 		System.out.println("size: " + tree.getSize());
 		System.out.println();
 		
+		// Testing with input file
+		MTree file_tree = new MTree();
+		FileIO _f = new FileIO();
+		//_f.getParentDirectory();
+		_f.ReadFileTransactions(tree, "../input_data.txt", true);
+		file_tree.printLog();
+		System.out.println('\n');
 		
 		for(int i = 1; i <= 16; i++) {
 			System.out.println("Adding leaf " + i + ":");
