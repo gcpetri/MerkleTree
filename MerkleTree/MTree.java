@@ -10,17 +10,18 @@
 ** Merkle Tree.
 ************************************************/
 package MerkleTree;
+import java.util.*;
 import java.math.BigInteger; 
 import java.security.MessageDigest; 
 import java.security.NoSuchAlgorithmException; 
 
 
-public class MTree {
+public class MTree<T> {
 	
 	private String hash = "";
 	
-	private MTree leftTree = null;
-	private MTree rightTree = null;
+	private MTree<T> leftTree = null;
+	private MTree<T> rightTree = null;
 	
 	// Child leaves
 	//private Leaf leftLeaf = null;
@@ -52,6 +53,14 @@ public class MTree {
 		return s;
 	}
 	
+	public void addleaves(ArrayList<Transaction> transactions) {
+		for(int i = 0; i < transactions.size(); i++) {
+			this.addLeaf(transactions.get(i));
+		}
+		
+	}
+	
+	
 	//adds the new leaf with a transaction to the tree
 	public void addLeaf(Transaction t) {
 		if(this.getSize() == 0) {
@@ -62,13 +71,13 @@ public class MTree {
 		}
 		else if(ispowoftwo(this.getSize())) {
 			//add this trees children to a new left tree
-			MTree m = new MTree();
+			MTree<T> m = new MTree<T>();
 			m.leftTree = this.leftTree;
 			m.rightTree = this.rightTree;
 			this.leftTree = m;
 			
 			//add log2(size) depth tree to the right side
-			MTree r = new MTree();
+			MTree<T> r = new MTree<T>();
 			this.rightTree = r;
 			this.rightTree.addnodes(log2(this.getSize())-1);
 			//add the node to the the new side of the tree
@@ -90,7 +99,7 @@ public class MTree {
 		if(leftTree == null || !leftTree.ismaxed()) {
 			//if no children, end of the tree is reached, add node
 			if(leftTree == null) {
-				MTree l = new Leaf(t);
+				MTree<T> l = new Leaf(t);
 				leftTree = l;
 			}
 			//if children, repeat to find end of tree
@@ -100,7 +109,7 @@ public class MTree {
 		else {
 			//if no children, end of the tree is reached, add node
 			if(rightTree == null) {
-				MTree r = new Leaf(t);
+				MTree<T> r = new Leaf(t);
 				rightTree = r;
 			}
 			//if children, repeat to find end of tree
@@ -112,8 +121,8 @@ public class MTree {
 	//recursively add nodes to create tree
 	private void addnodes(int depth) {
 		if(depth <= 0) {return; }
-		MTree l = new MTree();
-		MTree r = new MTree();
+		MTree<T> l = new MTree<T>();
+		MTree<T> r = new MTree<T>();
 		this.leftTree = l;
 		this.rightTree = r;
 		this.leftTree.addnodes(depth - 1);

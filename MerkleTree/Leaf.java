@@ -12,11 +12,11 @@
 
 package MerkleTree;
 
-public class Leaf extends MTree{
+public class Leaf<T> extends MTree{
 	
-	private Transaction content;
+	private T content;
 	
-	Leaf(Transaction t) {
+	Leaf(T t) {
 		
 		this.content = t;
 	}
@@ -26,9 +26,9 @@ public class Leaf extends MTree{
 	
 	public boolean ismaxed() {return true;}
 	
-	public String getHash() {return content.ToString();}
-	public String updateHash() {return content.ToString();}
-	public void printLog() {System.out.println(this.content.ToString());}
+	public String getHash() {return content.toString();}
+	public String updateHash() {return content.toString();}
+	public void printLog() {System.out.println(this.content.toString());}
 	
 	public void printTree(int d) {
 		System.out.print(d);

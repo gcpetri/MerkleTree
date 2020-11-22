@@ -22,12 +22,12 @@ package MerkleTree;
 
 public class Driver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		
 		String[] names = {"Jeff", "Bob", "Tim", "Greg", "Nick", "Shawn"};
 		
 		
-		MTree tree = new MTree();
+		MTree tree = new MTree<Transaction>();
 		
 		System.out.println("size: " + tree.getSize());
 		System.out.println();
@@ -71,6 +71,8 @@ public class Driver {
 		
 		System.out.println("Log of all transactions: ");
 		tree.printLog();
+
+		
 		
 	}
 	

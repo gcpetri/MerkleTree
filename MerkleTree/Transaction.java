@@ -36,8 +36,8 @@ public class Transaction {
 		return t;
 	}
 
-	
-	public String ToString() {
+	@Override
+	public String toString() {
 		String t = fromWallet + " -> $" + amount + " -> " + toWallet;
 		return t;
 	}
