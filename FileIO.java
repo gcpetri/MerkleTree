@@ -55,4 +55,10 @@ public class FileIO {
 			e.printStackTrace();
 		}
     }
+    // check your parent directory
+    public String getParentDirectory() {
+    	File curDir = new File(".");
+    	File parentDir = curDir.getParentFile();
+    	return parentDir.getName();
+    }
 }
