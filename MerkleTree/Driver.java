@@ -18,7 +18,7 @@
  * we referenced https://www.geeksforgeeks.org/md5-hash-in-java/ for use of MD5 hashing in Java.
 ************************************************/
 package MerkleTree;
-
+import java.util.*;
 
 public class Driver {
 
@@ -27,21 +27,28 @@ public class Driver {
 		String[] names = {"Jeff", "Bob", "Tim", "Greg", "Nick", "Shawn"};
 		
 		
-		MTree tree = new MTree<Transaction>();
+		MTree<Content> tree = new MTree<Content>();
 		
-		System.out.println("size: " + tree.getSize());
-		System.out.println();
+		//System.out.println("size: " + tree.getSize());
+		//System.out.println();
 		
 		// Testing with input file
-		MTree file_tree = new MTree();
 		FileIO _f = new FileIO();
-		//_f.getParentDirectory();
-		_f.ReadFileTransactions(tree, "../input_data.txt", true);
-		file_tree.printLog();
+		_f.ReadFileContent(tree, "input_data.txt");
 		System.out.println('\n');
 		
+		System.out.print("Tree with "+ tree.getSize() + " leaves:  ");
+		tree.printTree(0);
+		System.out.println();
+		
+		System.out.println("hash: " + tree.getHash());
+		System.out.println();
+		tree.printLog();
+		
+		
+		ArrayList<Content> newcontent = new ArrayList<Content>();
 		for(int i = 1; i <= 16; i++) {
-			System.out.println("Adding leaf " + i + ":");
+			//System.out.println("Adding leaf " + i + ":");
 			
 			String from = names[(int)(Math.random()*(6))];
 			
@@ -53,12 +60,14 @@ public class Driver {
 			double amount = Math.round(Math.random() * 10000)/(double)100;
 			
 			Transaction t = new Transaction(from,to,amount);
-			tree.addLeaf(t);
-			
-			System.out.println("size: " + tree.getSize());
-			System.out.println("maxed? " + tree.ismaxed());
-			System.out.println();
+			newcontent.add(t);
+			//tree.addLeaf(t);
+			//System.out.println("size: " + tree.getSize());
+			//System.out.println("maxed? " + tree.ismaxed());
+			//System.out.println();
 		}
+		tree.addLeaves(newcontent);
+		
 		
 		System.out.print("Tree with "+ tree.getSize() + " leaves:  ");
 		tree.printTree(0);
@@ -79,6 +88,8 @@ public class Driver {
 		System.out.println("Log of all transactions: ");
 		tree.printLog();
 
+		
+		_f.WriteFileContent(t, "Wallet.txt", true);
 		
 		
 	}

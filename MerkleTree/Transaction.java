@@ -14,30 +14,24 @@ package MerkleTree;
 
 
 
-public class Transaction {
-
-	private String fromWallet;
-	private String toWallet;
-	private double amount;
-	
-	
+public class Transaction extends Content {
 	
 	Transaction(String fromWallet, String toWallet, double amount) {
-		this.fromWallet = fromWallet;
-		this.toWallet = toWallet;
-		this.amount = amount;
+		super.from = fromWallet;
+		super.to = toWallet;
+		super.amount = amount;
 	}
 	
 	//NO SETTRANSACTION, because transactions should not be changed!
 	
-	protected String getTransaction() {
-		String t = fromWallet + " -> $" + amount + " -> " + toWallet;
+	protected String getContent() {
+		String t = from + " -> $" + amount + " -> " + to;
 		return t;
 	}
 
 	@Override
 	public String toString() {
-		String t = fromWallet + " -> $" + amount + " -> " + toWallet;
+		String t = from + " -> $" + amount + " -> " + to;
 		return t;
 	}
 }

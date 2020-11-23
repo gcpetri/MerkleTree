@@ -19,7 +19,7 @@ import java.util.Scanner;
 
 public class FileIO {
     
-    public void ReadFileTransactions(MTree<Transaction> mt, String inputFile) {
+    public void ReadFileContent(MTree<Content> mt, String inputFile) {
         try {
             File file = new File(inputFile);
             Scanner scnr = new Scanner(file);
@@ -30,8 +30,15 @@ public class FileIO {
                 fromW = scnr.nextLine();
                 toW = scnr.nextLine();
                 amount = Double.parseDouble(scnr.nextLine());
-                Transaction t = new Transaction(fromW, toW, amount);
-                mt.addLeaf(t);
+                if(fromW.equals("Transfer")) {
+                	Transfer t = new Transfer(toW, amount);
+                	mt.addLeaf(t);
+                }
+                else {
+                	Transaction t = new Transaction(fromW, toW, amount);
+                    mt.addLeaf(t);
+                }
+                
                 if (scnr.hasNextLine())
                 	scnr.nextLine();
             }
@@ -42,7 +49,8 @@ public class FileIO {
         }
     }
     // append transactions to a file
-    public void WriteFileTransactions(Transaction t, String outputFile, Boolean WriteNewLine) {
+    public void WriteFileContent(Content t, String outputFile, Boolean WriteNewLine) {
+    	
     	FileWriter fileWriter;
     	try {
     		fileWriter = new FileWriter(outputFile, true);
@@ -53,6 +61,7 @@ public class FileIO {
 		} catch (IOException e) {
 			System.out.println("An error with the output file occurred.");
 			e.printStackTrace();
-		}
+		}	
     }
+    
 }

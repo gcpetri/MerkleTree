@@ -20,15 +20,9 @@ public class MTree<T> {
 	
 	private String hash = "";
 	
+	//initialize children as null
 	private MTree<T> leftTree = null;
 	private MTree<T> rightTree = null;
-	
-	// Child leaves
-	//private Leaf leftLeaf = null;
-	//private Leaf rightLeaf = null;
-	
-	
-	//Leaf root = new Leaf("inp");
 	
 	public MTree() {
 		
@@ -53,16 +47,16 @@ public class MTree<T> {
 		return s;
 	}
 	
-	public void addleaves(ArrayList<Transaction> transactions) {
-		for(int i = 0; i < transactions.size(); i++) {
-			this.addLeaf(transactions.get(i));
+	//adds all the transactions of a list to the tree
+	public void addLeaves(ArrayList<T> content) {
+		for(int i = 0; i < content.size(); i++) {
+			this.addLeaf(content.get(i));
 		}
-		
 	}
 	
 	
 	//adds the new leaf with a transaction to the tree
-	public void addLeaf(Transaction t) {
+	public void addLeaf(T t) {
 		if(this.getSize() == 0) {
 			leftTree = new Leaf(t);
 		}
@@ -92,8 +86,8 @@ public class MTree<T> {
 		this.updateHash();
 	}
 	
-	
-	private void rippleAddLeaf(Transaction t) {
+	//recursively parses through tree to add leaf node in the correct place
+	private void rippleAddLeaf(T t) {
 		
 		//decides whether to traverse left or right tree
 		if(leftTree == null || !leftTree.ismaxed()) {
@@ -118,7 +112,7 @@ public class MTree<T> {
 		
 	}
 	
-	//recursively add nodes to create tree
+	//recursively add nodes to add another layer of depth to double the capacity of the tree
 	private void addnodes(int depth) {
 		if(depth <= 0) {return; }
 		MTree<T> l = new MTree<T>();
