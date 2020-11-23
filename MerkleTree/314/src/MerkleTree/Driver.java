@@ -36,8 +36,9 @@ public class Driver {
 		MTree<Transaction> file_tree = new MTree<Transaction>();
 		FileIO _f = new FileIO();
 		//_f.getParentDirectory();
-		_f.ReadFileTransactions(file_tree, "../input_data.txt");
+		_f.ReadFileTransactions(file_tree, "input_data.txt");
 		file_tree.printLog();
+		System.out.println(file_tree.getHash());
 		System.out.println('\n');
 		
 		for(int i = 1; i <= 16; i++) {
