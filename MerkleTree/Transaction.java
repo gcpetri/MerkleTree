@@ -19,7 +19,6 @@ public class Transaction {
 	private String fromWallet;
 	private String toWallet;
 	private double amount;
-	//private int number; 
 	
 	
 	
@@ -29,7 +28,7 @@ public class Transaction {
 		this.amount = amount;
 	}
 	
-	//NO SETTRANSACTION, because transactions should not be changed
+	//NO SETTRANSACTION, because transactions should not be changed!
 	
 	protected String getTransaction() {
 		String t = fromWallet + " -> $" + amount + " -> " + toWallet;

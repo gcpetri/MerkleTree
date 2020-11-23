@@ -19,7 +19,7 @@ import java.util.Scanner;
 
 public class FileIO {
     
-    public void ReadFileTransactions(MTree<Transaction> mt, String inputFile, Boolean ReadNewLine) {
+    public void ReadFileTransactions(MTree<Transaction> mt, String inputFile) {
         try {
             File file = new File(inputFile);
             Scanner scnr = new Scanner(file);
@@ -32,7 +32,7 @@ public class FileIO {
                 amount = Double.parseDouble(scnr.nextLine());
                 Transaction t = new Transaction(fromW, toW, amount);
                 mt.addLeaf(t);
-                if (ReadNewLine && scnr.hasNextLine())
+                if (scnr.hasNextLine())
                 	scnr.nextLine();
             }
             scnr.close();
