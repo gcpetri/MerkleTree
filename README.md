@@ -4,7 +4,7 @@ Cryptocurrency Security Implementation
 Gregory Petri & Nicholas Saldana
 
 Using Java via Eclipse IDE
-
+<hr>
 __*Documentation*__
 
 __To use the interface:__
