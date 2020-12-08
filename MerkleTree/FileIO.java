@@ -19,8 +19,8 @@ import java.util.Scanner;
 
 public class FileIO {
     
-    public void ReadFileContent(MTree<Content> mt, String inputFile) {
-        try {
+    public void ReadFileContent(MTree<Content> mt, String inputFile) throws FileNotFoundException {
+        //try {
             File file = new File(inputFile);
             Scanner scnr = new Scanner(file);
             String fromW;
@@ -43,10 +43,10 @@ public class FileIO {
                 	scnr.nextLine();
             }
             scnr.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error with the input file occurred.");
-            e.printStackTrace();
-        }
+        //} //catch (FileNotFoundException e) {
+         //   System.out.println("An error with the input file occurred.");
+         //   e.printStackTrace();
+        //}
     }
     // append transactions to a file
     public void WriteFileContent(Content t, String outputFile, Boolean WriteNewLine) {
