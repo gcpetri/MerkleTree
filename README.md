@@ -5,7 +5,7 @@ Gregory Petri & Nicholas Saldana
 
 Using Java via Eclipse IDE
 <hr></hr>
-__*Documentation*__
+**Documentation**
 
 __To use the interface:__
 
