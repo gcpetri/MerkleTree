@@ -29,6 +29,7 @@ public class Leaf<T> extends MTree{
 	public String getHash() {return content.toString();}
 	public String updateHash() {return content.toString();}
 	public void printLog() {System.out.println(this.content.toString());}
+	public void stringLog(ArrayList<String> log) { log.add(this.content.toString()); }
 	
 	public void printTree(int d) {
 		System.out.print(d);

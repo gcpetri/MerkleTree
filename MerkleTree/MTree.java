@@ -155,7 +155,22 @@ public class MTree<T> {
 	 public void printLog() {
 		 if(leftTree != null) {leftTree.printLog();}
 		 if(rightTree != null) {rightTree.printLog();}
-	 }
+	}
+	// recursively returns the string of leaf contents
+	public void stringLog(ArrayList<String> log) {
+		if(leftTree != null) { leftTree.stringLog(log);}
+		if(rightTree != null) { rightTree.stringLog(log);}
+	}
+	// returns the string of leaf contents
+	public String getStringLog() {
+		ArrayList<String> log = new ArrayList<String>();
+		this.stringLog(log);
+		String strlog = "";
+		for (int i = 0; i < log.size(); i++) {
+		   strlog += log.get(i) + "\n";
+		}
+		return strlog;
+    }
 	
 	//returns true if x is a power of 2
 	public static boolean ispowoftwo(int x){
