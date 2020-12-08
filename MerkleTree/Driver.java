@@ -23,7 +23,7 @@ import java.util.*;
 public class Driver {
 
 	public static void main(String[] args){
-		
+		/*
 		String[] names = {"Jeff", "Bob", "Tim", "Greg", "Nick", "Shawn"};
 		
 		
@@ -90,8 +90,9 @@ public class Driver {
 
 		
 		_f.WriteFileContent(t, "Wallet.txt", true);
-		
-		
+		*/
+		MTree<Content> mt = new MTree<Content>();
+		InputForm inp = new InputForm(mt);
 	}
 	
 }
