@@ -4,6 +4,8 @@ Cryptocurrency Security Implementation
 Gregory Petri & Nicholas Saldana
 
 Using Java via Eclipse IDE
+
+Video: https://github.com/gcpetri/MerkleTree314 </br>
 <hr></hr>
 **Documentation**
 
