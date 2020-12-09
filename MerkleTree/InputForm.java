@@ -25,6 +25,7 @@ public class InputForm extends JFrame implements ActionListener {
 	private JLabel LBLTo;
 	private JLabel LBLFrom;
 	private JLabel LBLAmount;
+	private JLabel LBLFile;
 	private JTextField TXTToName;
 	private JTextField TXTFromName;
 	private JTextField TXTamount;
@@ -33,11 +34,10 @@ public class InputForm extends JFrame implements ActionListener {
 	private JButton BTNclear;
 	private JButton BTNshowLog;
 	private JButton BTNcloseLog;
-	private JButton BTNfile;
 	private JLabel LBLtype;
 	private JRadioButton BTNtransaction;
 	private JRadioButton BTNtransfer;
-	private JRadioButton BTNfilecheck;
+	private JRadioButton BTNfile;
 	private MTree<Content> tree;
 	private JTextArea history;
 	private ButtonGroup bg;
@@ -86,23 +86,24 @@ public class InputForm extends JFrame implements ActionListener {
 		BTNtransaction.addActionListener(this);
 		//c.add(BTNtransaction);
 		p1.add(BTNtransaction, BorderLayout.WEST);
-		this.BTNfilecheck = new JRadioButton("Exchanges from File");
-		BTNfilecheck.setFont(new Font("Monospaced", Font.PLAIN, 15));
-		BTNfilecheck.setSelected(false);
-		BTNfilecheck.addActionListener(this);
-		p1.add(BTNfilecheck, BorderLayout.EAST);
+		this.BTNfile = new JRadioButton("Exchanges from File");
+		BTNfile.setFont(new Font("Monospaced", Font.PLAIN, 15));
+		BTNfile.setSelected(false);
+		//BTNfile.setBorder(new EmptyBorder(0,0,0,200));
+		BTNfile.addActionListener(this);
+		p1.add(BTNfile, BorderLayout.LINE_END);
 		this.BTNtransfer = new JRadioButton("Transfer"); // transfer button
 		BTNtransfer.setFont(new Font("Monospaced", Font.PLAIN, 15));
 		//BTNtransfer.setLocation(400, 85);
 		//BTNtransfer.setSize(200,30);
 		BTNtransfer.setSelected(false);
-		//BTNtransfer.setBorder(new EmptyBorder(0,0,0,200));
+		BTNtransfer.setBorder(new EmptyBorder(0,230,0,0));
 		BTNtransfer.addActionListener(this);
 		p1.add(BTNtransfer, BorderLayout.CENTER);
 		this.bg = new ButtonGroup();
 		bg.add(BTNtransaction);
 		bg.add(BTNtransfer);
-		bg.add(BTNfilecheck);
+		bg.add(BTNfile);
 		c.add(p1);
 		// p2 ################
 		this.p2 = new JPanel();
@@ -151,15 +152,13 @@ public class InputForm extends JFrame implements ActionListener {
 		TXTamount.setBorder(new EmptyBorder(0,20,0,20));
 		p2.add(LBLAmount);
 		p2.add(TXTamount);
-		this.BTNfile = new JButton("Add Exchanges from File"); // button to load file exchanges
-		BTNfile.setOpaque(true);
-		BTNfile.setBackground(Color.lightGray);
-		BTNfile.addActionListener(this);
-		BTNfile.setVisible(false);
+		this.LBLFile = new JLabel("Filename"); // button to load file exchanges
+		LBLFile.setVisible(false);
+		LBLFile.setFont(new Font("Monospaced", Font.PLAIN, 20));
 		this.TXTFileName = new JTextField();
 		TXTFileName.setFont(new Font("Monospaced", Font.PLAIN, 12)); // input for filename
 		TXTFileName.setVisible(false);
-		p2.add(BTNfile);
+		p2.add(LBLFile);
 		p2.add(TXTFileName);
 		c.add(p2);
 		// p3 #####################
@@ -197,6 +196,7 @@ public class InputForm extends JFrame implements ActionListener {
 		history.setSize(10,10);
 		//history.setLocation(300,300);
 		history.setEditable(false);
+		history.setBorder(innerBorder);
 		p4.add(history, BorderLayout.CENTER);
 		p4.setBackground(new Color(100,110,220,100));
 		this.BTNshowLog = new JButton("Show Your Exchange Log"); // show log history button
@@ -229,14 +229,14 @@ public class InputForm extends JFrame implements ActionListener {
 			TXTToName.setVisible(true);
 			LBLAmount.setVisible(true);
 			TXTamount.setVisible(true);
-			BTNfile.setVisible(false);
+			LBLFile.setVisible(false);
 			TXTFileName.setVisible(false);
 		} else if (e.getSource() == BTNtransfer) {
 			LBLFrom.setVisible(false);
 			TXTFromName.setVisible(false);
 			LBLAmount.setVisible(true);
 			TXTamount.setVisible(true);
-			BTNfile.setVisible(false);
+			LBLFile.setVisible(false);
 			TXTFileName.setVisible(false);
 			LBLTo.setVisible(true);
 			TXTToName.setVisible(true);
@@ -245,7 +245,7 @@ public class InputForm extends JFrame implements ActionListener {
 			TXTToName.setText("");
 			TXTamount.setText("");
 		} else if (e.getSource() == BTNconfirm) {
-			if (TXTToName.getText().isEmpty()) {
+			if (TXTToName.getText().isEmpty() && !BTNfile.isSelected()) {
 				JOptionPane.showMessageDialog(null, "Error", "Send to is a required field", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -264,7 +264,7 @@ public class InputForm extends JFrame implements ActionListener {
 				Transaction t = new Transaction(TXTFromName.getText(), TXTToName.getText(), amt);
 				this.tree.addLeaf(t);
 
-			} else {
+			} else if (BTNtransfer.isSelected()) {
 				double amt;
 				try {
 					amt = Double.parseDouble(TXTamount.getText());
@@ -274,11 +274,24 @@ public class InputForm extends JFrame implements ActionListener {
 				}
 				Transfer t = new Transfer(TXTToName.getText(), amt);
 				this.tree.addLeaf(t);
-			}
+			} else if (BTNfile.isSelected()) {
+				FileIO f = new FileIO();
+				try {
+					f.ReadFileContent(tree, this.TXTFileName.getText());
+					TXTFileName.setText("");
+				} catch (FileNotFoundException e3) {
+					JOptionPane.showMessageDialog(null, "Error", "File: " + TXTFileName.getText() + " not found", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+			} 
 			if (BTNtransaction.isSelected()) { TXTFromName.setText(TXTToName.getText()); }
-			String submit = TXTFromName.getText() + " -> $" + TXTamount.getText() + " -> " + TXTToName.getText();
-			JOptionPane.showMessageDialog(null, "Exchange Processed", submit, JOptionPane.INFORMATION_MESSAGE);
-		    TXTFromName.setText("");
+			if (BTNfile.isSelected()) {
+				JOptionPane.showMessageDialog(null, "Exchanges Processed", "Exchanged Processed from "+TXTFileName.getText(), JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				String submit = TXTFromName.getText() + " -> $" + TXTamount.getText() + " -> " + TXTToName.getText();
+				JOptionPane.showMessageDialog(null, "Exchange Processed", submit, JOptionPane.INFORMATION_MESSAGE);
+			}
+			TXTFromName.setText("");
 			TXTToName.setText("");
 			TXTamount.setText("");
 		} else if (e.getSource() == BTNshowLog) {
@@ -318,22 +331,15 @@ public class InputForm extends JFrame implements ActionListener {
 			LBLTo.setFont(new Font("Monospaced", Font.PLAIN, 20));
 			LBLAmount.setFont(new Font("Monospaced", Font.BOLD, 25));
 		} else if (e.getSource() == BTNfile) {
-			FileIO f = new FileIO();
-			try {
-				f.ReadFileContent(tree, this.TXTFileName.getText());
-				TXTFileName.setText("");
-			} catch (FileNotFoundException e3) {
-				JOptionPane.showMessageDialog(null, "Error", "File: " + TXTFileName.getText() + " not found", JOptionPane.ERROR_MESSAGE);
-			}
-		} else if (e.getSource() == BTNfilecheck) {
 			LBLFrom.setVisible(false);
 			TXTFromName.setVisible(false);
 			LBLAmount.setVisible(false);
 			TXTamount.setVisible(false);
 			LBLTo.setVisible(false);
 			TXTToName.setVisible(false);
-			BTNfile.setVisible(true);
+			LBLFile.setVisible(true);
 			TXTFileName.setVisible(true);
 		}
 	}
 }
+
