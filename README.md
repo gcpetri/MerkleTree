@@ -5,7 +5,7 @@ Gregory Petri & Nicholas Saldana
 
 Using Java via Eclipse IDE
 
-Video: https://github.com/gcpetri/MerkleTree314 </br>
+Video: https://www.youtube.com/watch?v=Un3aCkIsq_M&feature=youtu.be </br>
 <hr></hr>
 **Documentation**
 
