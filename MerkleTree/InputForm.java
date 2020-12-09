@@ -218,6 +218,7 @@ public class InputForm extends JFrame implements ActionListener {
 		p4.add(BTNcloseLog, BorderLayout.EAST);
 		this.hashValue = new JTextField(); // hash of whole tree
 		hashValue.setFont(new Font("Monospaced", Font.ITALIC, 14));
+		hashValue.setEditable(false);
 		p4.add(hashValue, BorderLayout.SOUTH);
 		setVisible(true);
 	}
@@ -244,6 +245,7 @@ public class InputForm extends JFrame implements ActionListener {
 			TXTFromName.setText("");
 			TXTToName.setText("");
 			TXTamount.setText("");
+			TXTFileName.setText("");
 		} else if (e.getSource() == BTNconfirm) {
 			if (TXTToName.getText().isEmpty() && !BTNfile.isSelected()) {
 				JOptionPane.showMessageDialog(null, "Error", "Send to is a required field", JOptionPane.ERROR_MESSAGE);
@@ -283,8 +285,7 @@ public class InputForm extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Error", "File: " + TXTFileName.getText() + " not found", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-			} 
-			if (BTNtransaction.isSelected()) { TXTFromName.setText(TXTToName.getText()); }
+			}
 			if (BTNfile.isSelected()) {
 				JOptionPane.showMessageDialog(null, "Exchanges Processed", "Exchanged Processed from "+TXTFileName.getText(), JOptionPane.INFORMATION_MESSAGE);
 			} else {
@@ -342,4 +343,3 @@ public class InputForm extends JFrame implements ActionListener {
 		}
 	}
 }
-
