@@ -52,3 +52,12 @@ __MTree Member Function Syntax & Semantics:__
 `tree.log(int)`</br>
 * returns (String) the hash of the String parameter - use to see an example of the hash function</br>
 `tree.calcHash(String)`</br>
+
+__UML:__</br>
+</br>
+![plot](MerkleTreeDesign.PNG)
+</br>
+__Tree Layout:__</br>
+</br>
+![plot](MerkleTreeInputExample.PNG)
+</br>
